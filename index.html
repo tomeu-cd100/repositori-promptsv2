@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositori de Prompts</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header amb barra de cerca -->
+    <header>
+        <h1>Repositori de Prompts</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Cerca prompts..." />
+            <button id="searchBtn">🔍</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar amb categories -->
+        <aside class="sidebar">
+            <h2>Categories</h2>
+            <ul id="categoryList">
+                <li class="category-item active" data-category="all">
+                    <span>Tots els prompts</span>
+                    <span class="count">0</span>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Àrea principal amb prompts -->
+        <main class="main-content">
+            <div id="promptsContainer" class="prompts-grid">
+                <!-- Els prompts es carregaran dinàmicament aquí -->
+            </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <p>No s'han trobat prompts</p>
+            </div>
+            <div id="loadingState" class="loading-state">
+                <p>Carregant prompts...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal d'edició -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Prompt</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Camp d'autenticació -->
+                <div class="form-group" id="authGroup">
+                    <label for="authPassword">Contrasenya d'administrador:</label>
+                    <input type="password" id="authPassword" placeholder="Introdueix la contrasenya">
+                    <button id="authBtn" class="btn-primary">Autenticar</button>
+                </div>
+
+                <!-- Formulari d'edició (ocult fins autenticar) -->
+                <div id="editForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="editTitle">Títol:</label>
+                        <input type="text" id="editTitle" placeholder="Títol del prompt">
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategory">Categoria:</label>
+                        <select id="editCategory">
+                            <!-- Les categories es carregaran dinàmicament -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPrompt">Prompt:</label>
+                        <textarea id="editPrompt" rows="10" placeholder="Contingut del prompt"></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="saveBtn" class="btn-primary">Desar</button>
+                        <button id="cancelBtn" class="btn-secondary">Cancel·lar</button>
+                        <button id="deleteBtn" class="btn-danger">Esborrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
