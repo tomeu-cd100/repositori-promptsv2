@@ -1,7 +1,7 @@
 // Configuració
 const CONFIG = {
     // URL del Google Apps Script Web App (cal configurar-la després de crear el script)
-    API_URL: 'https://script.google.com/macros/s/AKfycbzfW0SkCdHn6lIiya0uPOrIbNbx1l9GGivxcq7v2OCptnUfTF351B9mOXo5j2VYlZOd/execT_AQUI',
+    API_URL: 'https://script.google.com/macros/s/AKfycbzfW0SkCdHn6lIiya0uPOrIbNbx1l9GGivxcq7v2OCptnUfTF351B9mOXo5j2VYlZOd/exec',
     ADMIN_PASSWORD: 'indigomontoya', // CANVIA AQUESTA CONTRASENYA!
     CATEGORIES: ['Prompt Mestre', 'Assignatura OPT', 'Pedagogia', 'Vídeos Alumnes']
 };
