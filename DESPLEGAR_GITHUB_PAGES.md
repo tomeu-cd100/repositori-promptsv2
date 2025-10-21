@@ -37,6 +37,8 @@ Accede a: `https://docs.google.com/spreadsheets/d/1STc_y1Fc6dkNW9duPU-TxsOpoHZAE
    - Autoriza los permisos
 3. **COPIA LA URL** del Web App (la necesitarás en el siguiente paso)
 
+**NOTA**: El proyecto actual ya tiene un Google Apps Script desplegado y funcionando. Solo necesitas crear uno nuevo si quieres usar tu propia cuenta de Google.
+
 ---
 
 ## 🔑 PASO 2: Configurar la URL de la API
@@ -49,11 +51,13 @@ Accede a: `https://docs.google.com/spreadsheets/d/1STc_y1Fc6dkNW9duPU-TxsOpoHZAE
 
 ```javascript
 const CONFIG = {
-    API_URL: 'https://script.google.com/macros/s/TU_URL_AQUI/exec',
-    ADMIN_PASSWORD: 'tu_contrasenya_segura',
+    API_URL: 'https://script.google.com/macros/s/AKfycbzxKZdhPxg6aeHk3UTVtS6FEKmiIrAhb4NmhsFZHe6MjN_DXvdufAFRxhDYONYHJL1T/exec',
+    ADMIN_PASSWORD: '123',
     CATEGORIES: ['Prompt Mestre', 'Assignatura OPT', 'Pedagogia', 'Vídeos Alumnes']
 };
 ```
+
+**IMPORTANTE**: La URL y contraseña mostradas arriba son las actuales del proyecto funcionando. Cámbialas solo si necesitas usar tu propio Google Apps Script o quieres una contraseña diferente.
 
 5. Guarda el archivo
 
@@ -241,13 +245,18 @@ https://tomeu-cd100.github.io/repositori-promptsv2/
 
 ---
 
-## 🆘 ARCHIVOS IMPORTANTES
+## 🆘 ARCHIVOS DEL PROYECTO
 
-- **index.html** - Página principal (TODO EN UNO)
+- **index.html** - Aplicación standalone (HTML+CSS+JS todo en uno)
 - **google-apps-script.gs** - Código para Google Apps Script
-- **README.md** - Documentación del proyecto
+- **README.md** - Documentación principal del proyecto
+- **DESPLEGAR_GITHUB_PAGES.md** - Esta guía (deployment en GitHub Pages)
 - **GUIA_GOOGLE_DRIVE.md** - Guía alternativa para Google Drive
-- **DESPLEGAR_GITHUB_PAGES.md** - Esta guía
+
+**ARCHIVOS ELIMINADOS** (ya no necesarios en versión standalone):
+- ~~script.js~~ - Ahora integrado en index.html
+- ~~styles.css~~ - Ahora integrado en index.html
+- ~~config.example.js~~ - Ya no necesario
 
 ---
 

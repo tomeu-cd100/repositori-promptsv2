@@ -20,9 +20,10 @@ Accede a tu hoja de cálculo compartida:
 ### 1.3 Verificar el nombre del sheet
 En el código que acabas de pegar, verifica la línea 21:
 ```javascript
-const MAIN_SHEET_NAME = 'Respostes del formulari 1';
+const MAIN_SHEET_NAME = 'Respostes';
 ```
 - Asegúrate de que este nombre coincide EXACTAMENTE con el nombre de tu pestaña en Google Sheets
+- El nombre actual del proyecto es 'Respostes'
 - Si tu pestaña tiene otro nombre, cámbialo aquí
 
 ### 1.4 Desplegar como Web App
@@ -51,20 +52,21 @@ const MAIN_SHEET_NAME = 'Respostes del formulari 1';
 ## 📁 PASO 2: Configurar el archivo HTML
 
 ### 2.1 Editar la configuración
-1. Abre el archivo `index-standalone.html` en un editor de texto
-2. Busca la sección de configuración (alrededor de la línea 567):
+1. Abre el archivo `index.html` en un editor de texto
+2. Busca la sección de configuración (alrededor de la línea 94):
    ```javascript
    const CONFIG = {
-       API_URL: 'https://script.google.com/macros/s/AKfycbzfW0SkCdHn6lIiya0uPOrIbNbx1l9GGivxcq7v2OCptnUfTF351B9mOXo5j2VYlZOd/exec',
+       API_URL: 'https://script.google.com/macros/s/AKfycbzxKZdhPxg6aeHk3UTVtS6FEKmiIrAhb4NmhsFZHe6MjN_DXvdufAFRxhDYONYHJL1T/exec',
        ADMIN_PASSWORD: '123',
        CATEGORIES: ['Prompt Mestre', 'Assignatura OPT', 'Pedagogia', 'Vídeos Alumnes']
    };
    ```
 
-3. **Reemplaza** la URL del `API_URL` con la URL que copiaste en el paso 1.4
-4. **Cambia** el `ADMIN_PASSWORD` por una contraseña segura
-5. Ajusta las `CATEGORIES` si necesitas otras categorías
-6. Guarda el archivo
+3. **NOTA**: La URL y contraseña mostradas son las actuales del proyecto funcionando
+4. Si quieres usar tu propio Google Apps Script, reemplaza la URL del `API_URL` con la que copiaste en el paso 1.4
+5. Si quieres cambiar la contraseña, modifica `ADMIN_PASSWORD`
+6. Ajusta las `CATEGORIES` si necesitas otras categorías
+7. Guarda el archivo
 
 ---
 
@@ -73,14 +75,14 @@ const MAIN_SHEET_NAME = 'Respostes del formulari 1';
 ### 3.1 Subir el archivo
 1. Ve a tu Google Drive: https://drive.google.com
 2. Crea una carpeta llamada "Repositori Prompts" (o el nombre que prefieras)
-3. Sube el archivo `index-standalone.html` a esta carpeta
+3. Sube el archivo `index.html` a esta carpeta
 4. Opcionalmente, también puedes subir:
    - `google-apps-script.gs` (para referencia)
    - `GUIA_GOOGLE_DRIVE.md` (esta guía)
    - `README.md` (documentación del proyecto)
 
 ### 3.2 Compartir el archivo
-1. Haz clic derecho en `index-standalone.html`
+1. Haz clic derecho en `index.html`
 2. Selecciona "Compartir" o "Obtener enlace"
 3. En "Acceso general", selecciona:
    - **"Cualquier persona con el enlace"** si quieres que cualquiera pueda acceder
@@ -209,13 +211,17 @@ Si tienes problemas:
 
 ## 📚 ARCHIVOS DEL PROYECTO
 
-- `index-standalone.html` - Archivo principal para usar desde Google Drive (TODO EN UNO)
-- `index.html` - Archivo HTML original (requiere archivos separados)
-- `script.js` - JavaScript original (no necesario para versión standalone)
-- `styles.css` - CSS original (no necesario para versión standalone)
+- `index.html` - Archivo principal standalone (HTML+CSS+JS todo en uno)
 - `google-apps-script.gs` - Código para Google Apps Script
-- `README.md` - Documentación del proyecto
-- `GUIA_GOOGLE_DRIVE.md` - Esta guía
+- `README.md` - Documentación principal del proyecto
+- `DESPLEGAR_GITHUB_PAGES.md` - Guía de deployment en GitHub Pages
+- `GUIA_GOOGLE_DRIVE.md` - Esta guía (alternativa Google Drive)
+
+**ARCHIVOS ELIMINADOS** (ya no necesarios en versión standalone):
+- ~~script.js~~ - Ahora integrado en index.html
+- ~~styles.css~~ - Ahora integrado en index.html
+- ~~config.example.js~~ - Ya no necesario
+- ~~index-standalone.html~~ - Ahora index.html es la versión standalone
 
 ---
 
