@@ -59,8 +59,6 @@ function doPost(e) {
 
     if (action === 'updatePrompt') {
       return updatePrompt(promptData);
-    } else if (action === 'moveToTrash') {
-      return moveToTrash(promptData);
     }
 
     return ContentService.createTextOutput(JSON.stringify({
