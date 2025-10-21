@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nOptimizar proyecto para GitHub Pages y solucionar problemas\n\nCambios realizados:\n- Convertir index.html a versión standalone (CSS y JS integrados)\n- Solucionar elemento authGroup faltante que causaba error\n- Eliminar archivos separados innecesarios (script.js, styles.css, config.example.js)\n- Crear guía completa de despliegue en GitHub Pages\n- Crear guía alternativa para Google Drive\n- Preparar proyecto para publicación web\n\nFixes:\n- Problema de carga de prompts solucionado\n- Modal de autenticación ahora funciona correctamente\n- Eliminados problemas de CORS para GitHub Pages\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
