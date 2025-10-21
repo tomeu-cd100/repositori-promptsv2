@@ -893,21 +893,31 @@
         // Comunicació amb Google Sheets
         async function updatePromptInSheet(prompt) {
             try {
+                console.log('💾 Intentant actualitzar prompt:', prompt);
+
+                // Usar POST amb mode no-cors - enviant com FormData
+                const formData = new URLSearchParams();
+                formData.append('action', 'updatePrompt');
+                formData.append('data', JSON.stringify(prompt));
+
                 const response = await fetch(CONFIG.API_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'updatePrompt',
-                        data: prompt
-                    })
+                    body: formData
                 });
 
+                console.log('🟢 Resposta d\'updatePrompt. Status:', response.status);
+
+                const result = await response.json();
+                console.log('📦 Resultat d\'updatePrompt:', result);
+
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
                 if (!response.ok) throw new Error('Error actualitzant');
-                return await response.json();
+                return result;
             } catch (error) {
-                console.error('Error en updatePromptInSheet:', error);
+                console.error('❌ Error en updatePromptInSheet:', error);
                 throw error;
             }
         }
@@ -916,15 +926,14 @@
             try {
                 console.log('🗑️ Intentant esborrar prompt:', prompt);
 
+                // Usar POST amb mode no-cors - enviant com FormData
+                const formData = new URLSearchParams();
+                formData.append('action', 'moveToTrash');
+                formData.append('data', JSON.stringify(prompt));
+
                 const response = await fetch(CONFIG.API_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'moveToTrash',
-                        data: prompt
-                    })
+                    body: formData
                 });
 
                 console.log('🟢 Resposta de moveToTrash. Status:', response.status);

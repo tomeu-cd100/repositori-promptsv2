@@ -43,13 +43,24 @@ function doGet(e) {
  */
 function doPost(e) {
   try {
-    const data = JSON.parse(e.postData.contents);
-    const action = data.action;
+    // Llegir paràmetres del POST (poden venir com a URL parameters o JSON)
+    let action, promptData;
+
+    if (e.parameter && e.parameter.action) {
+      // Dades enviades com a URL parameters (FormData)
+      action = e.parameter.action;
+      promptData = JSON.parse(e.parameter.data);
+    } else if (e.postData && e.postData.contents) {
+      // Dades enviades com a JSON
+      const data = JSON.parse(e.postData.contents);
+      action = data.action;
+      promptData = data.data;
+    }
 
     if (action === 'updatePrompt') {
-      return updatePrompt(data.data);
+      return updatePrompt(promptData);
     } else if (action === 'moveToTrash') {
-      return moveToTrash(data.data);
+      return moveToTrash(promptData);
     }
 
     return ContentService.createTextOutput(JSON.stringify({
