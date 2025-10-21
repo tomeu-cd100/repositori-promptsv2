@@ -18,7 +18,7 @@
  */
 
 // Nom del full principal (on estan les respostes del formulari)
-const MAIN_SHEET_NAME = 'Respostes del formulari 1'; // Canvia això si el teu full té un altre nom
+const MAIN_SHEET_NAME = 'Respostes'; // Canvia això si el teu full té un altre nom
 
 // Nom del full de paperera (es crearà automàticament si no existeix)
 const TRASH_SHEET_NAME = 'Paperera';
