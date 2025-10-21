@@ -623,11 +623,24 @@
         // Funció per obtenir dades de Google Sheets
         async function fetchFromGoogleSheets() {
             try {
+                console.log('🔵 Intentant connectar amb:', CONFIG.API_URL);
                 const response = await fetch(`${CONFIG.API_URL}?action=getPrompts`);
+                console.log('🟢 Resposta rebuda. Status:', response.status);
+
                 if (!response.ok) throw new Error('Error en la resposta del servidor');
-                return await response.json();
+
+                const data = await response.json();
+                console.log('📦 Dades rebudes:', data);
+
+                if (data.error) {
+                    console.error('❌ Error del servidor:', data.error);
+                    alert('Error del Google Apps Script: ' + data.error);
+                }
+
+                return data;
             } catch (error) {
-                console.error('Error connectant amb Google Sheets:', error);
+                console.error('❌ Error connectant amb Google Sheets:', error);
+                alert('Error de connexió: ' + error.message);
                 return null;
             }
         }
