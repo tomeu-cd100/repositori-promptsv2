@@ -43,18 +43,18 @@ function doGet(e) {
  */
 function doPost(e) {
   try {
-    // Llegir paràmetres del POST (poden venir com a URL parameters o JSON)
+    // Llegir paràmetres del POST
     let action, promptData;
 
-    if (e.parameter && e.parameter.action) {
-      // Dades enviades com a URL parameters (FormData)
+    // Les dades sempre venen com a e.parameter quan s'envia FormData
+    if (e.parameter && e.parameter.action && e.parameter.data) {
       action = e.parameter.action;
       promptData = JSON.parse(e.parameter.data);
-    } else if (e.postData && e.postData.contents) {
-      // Dades enviades com a JSON
-      const data = JSON.parse(e.postData.contents);
-      action = data.action;
-      promptData = data.data;
+    } else {
+      return ContentService.createTextOutput(JSON.stringify({
+        error: 'Paràmetres invàlids',
+        received: e.parameter
+      })).setMimeType(ContentService.MimeType.JSON);
     }
 
     if (action === 'updatePrompt') {
@@ -64,12 +64,13 @@ function doPost(e) {
     }
 
     return ContentService.createTextOutput(JSON.stringify({
-      error: 'Acció no reconeguda'
+      error: 'Acció no reconeguda: ' + action
     })).setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({
-      error: error.toString()
+      error: error.toString(),
+      stack: error.stack
     })).setMimeType(ContentService.MimeType.JSON);
   }
 }
