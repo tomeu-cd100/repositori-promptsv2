@@ -84,16 +84,16 @@ function getPrompts() {
     for (let i = 1; i < data.length; i++) {
       const row = data[i];
 
-      // Només afegir si té contingut
-      if (row[2] && row[3]) { // Títol i Prompt
+      // Només afegir si té contingut (mínim títol i prompt)
+      if (row[2] && row[3]) { // Columna C: Títol, Columna D: Prompt
         prompts.push({
           id: `${i}`, // Utilitzem el número de fila com ID
           rowIndex: i + 1, // Fila real al sheet (començant per 1)
-          timestamp: row[0],
-          email: row[1],
-          title: row[2],
-          prompt: row[3],
-          category: row[4] || 'Sense categoria'
+          timestamp: row[0] || '', // Columna A
+          email: row[1] || '', // Columna B
+          title: row[2], // Columna C
+          prompt: row[3], // Columna D
+          category: row[4] || 'General' // Columna E (si existeix)
         });
       }
     }
