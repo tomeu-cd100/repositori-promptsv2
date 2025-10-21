@@ -56,7 +56,7 @@ const MAIN_SHEET_NAME = 'Respostes';
 2. Busca la sección de configuración (alrededor de la línea 94):
    ```javascript
    const CONFIG = {
-       API_URL: 'https://script.google.com/macros/s/AKfycbzxKZdhPxg6aeHk3UTVtS6FEKmiIrAhb4NmhsFZHe6MjN_DXvdufAFRxhDYONYHJL1T/exec',
+       API_URL: 'https://script.google.com/macros/s/AKfycbybL98pO6VIKZYbTVYuTSfP-BUn_68vqUDeaEp53SZ_mgQUu6dREbBf3oKS7gei0jhq/exec',
        ADMIN_PASSWORD: '123',
        CATEGORIES: ['Prompt Mestre', 'Assignatura OPT', 'Pedagogia', 'Vídeos Alumnes']
    };

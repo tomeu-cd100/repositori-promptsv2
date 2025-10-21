@@ -51,7 +51,7 @@ Accede a: `https://docs.google.com/spreadsheets/d/1STc_y1Fc6dkNW9duPU-TxsOpoHZAE
 
 ```javascript
 const CONFIG = {
-    API_URL: 'https://script.google.com/macros/s/AKfycbzxKZdhPxg6aeHk3UTVtS6FEKmiIrAhb4NmhsFZHe6MjN_DXvdufAFRxhDYONYHJL1T/exec',
+    API_URL: 'https://script.google.com/macros/s/AKfycbybL98pO6VIKZYbTVYuTSfP-BUn_68vqUDeaEp53SZ_mgQUu6dREbBf3oKS7gei0jhq/exec',
     ADMIN_PASSWORD: '123',
     CATEGORIES: ['Prompt Mestre', 'Assignatura OPT', 'Pedagogia', 'Vídeos Alumnes']
 };
