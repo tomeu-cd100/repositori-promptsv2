@@ -842,17 +842,11 @@
                 // Actualitzar a Google Sheets
                 await updatePromptInSheet(updatedPrompt);
 
-                // Actualitzar localment
-                const index = state.prompts.findIndex(p => p.id === updatedPrompt.id);
-                if (index !== -1) {
-                    state.prompts[index] = updatedPrompt;
-                }
-
-                filterByCategory(state.currentCategory);
-                renderCategories();
                 closeModal();
-
                 alert('Prompt actualitzat correctament!');
+
+                // Recarregar tots els prompts des del Google Sheet
+                await loadPrompts();
             } catch (error) {
                 console.error('Error desant:', error);
                 alert('Error desant els canvis. Comprova la consola.');
@@ -886,17 +880,11 @@
                 // Actualitzar a Google Sheets (canviar categoria a Paperera)
                 await updatePromptInSheet(trashedPrompt);
 
-                // Actualitzar localment
-                const index = state.prompts.findIndex(p => p.id === trashedPrompt.id);
-                if (index !== -1) {
-                    state.prompts[index] = trashedPrompt;
-                }
-
-                filterByCategory(state.currentCategory);
-                renderCategories(); // Re-renderitzar categories per actualitzar comptadors
                 closeModal();
-
                 alert('Prompt enviat a la paperera!');
+
+                // Recarregar tots els prompts des del Google Sheet
+                await loadPrompts();
             } catch (error) {
                 console.error('Error esborrant:', error);
                 alert('Error esborrant el prompt. Comprova la consola.');
