@@ -608,8 +608,11 @@
 
                 if (response && response.data) {
                     state.prompts = response.data;
-                    state.filteredPrompts = [...state.prompts];
-                    renderPrompts();
+
+                    // Aplicar el filtre de la categoria actual
+                    filterByCategory(state.currentCategory);
+
+                    // Renderitzar categories actualitzades
                     renderCategories();
                 } else {
                     // Mostrar error si no hi ha connexió
