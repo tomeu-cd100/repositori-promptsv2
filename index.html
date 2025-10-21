@@ -503,19 +503,8 @@
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body">
-                <!-- Autenticació -->
-                <div id="authGroup">
-                    <div class="form-group">
-                        <label for="authPassword">Contrasenya d'administrador:</label>
-                        <input type="password" id="authPassword" placeholder="Introdueix la contrasenya">
-                    </div>
-                    <div class="modal-actions">
-                        <button id="authBtn" class="btn-primary">Autenticar</button>
-                    </div>
-                </div>
-
                 <!-- Formulari d'edició -->
-                <div id="editForm" style="display: none;">
+                <div id="editForm">
                     <div class="form-group">
                         <label for="editTitle">Títol:</label>
                         <input type="text" id="editTitle" placeholder="Títol del prompt">
@@ -568,9 +557,6 @@
             editTitle: document.getElementById('editTitle'),
             editCategory: document.getElementById('editCategory'),
             editPrompt: document.getElementById('editPrompt'),
-            authPassword: document.getElementById('authPassword'),
-            authBtn: document.getElementById('authBtn'),
-            authGroup: document.getElementById('authGroup'),
             editForm: document.getElementById('editForm'),
             saveBtn: document.getElementById('saveBtn'),
             cancelBtn: document.getElementById('cancelBtn'),
@@ -600,7 +586,6 @@
             // Modal
             elements.closeModal.addEventListener('click', closeModal);
             elements.cancelBtn.addEventListener('click', closeModal);
-            elements.authBtn.addEventListener('click', handleAuth);
             elements.saveBtn.addEventListener('click', handleSave);
             elements.deleteBtn.addEventListener('click', handleDelete);
 
@@ -608,13 +593,6 @@
             window.addEventListener('click', (e) => {
                 if (e.target === elements.editModal) {
                     closeModal();
-                }
-            });
-
-            // Enter per autenticar
-            elements.authPassword.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    handleAuth();
                 }
             });
         }
@@ -821,11 +799,11 @@
         // Modal d'edició
         function openEditModal(prompt) {
             state.currentEditingPrompt = prompt;
-            state.isAuthenticated = false;
 
-            elements.authGroup.style.display = 'block';
-            elements.editForm.style.display = 'none';
-            elements.authPassword.value = '';
+            // Omplir el formulari amb les dades del prompt
+            elements.editTitle.value = prompt.title;
+            elements.editCategory.value = prompt.category;
+            elements.editPrompt.value = prompt.prompt;
 
             elements.editModal.classList.add('show');
         }
@@ -833,33 +811,11 @@
         function closeModal() {
             elements.editModal.classList.remove('show');
             state.currentEditingPrompt = null;
-            state.isAuthenticated = false;
-        }
-
-        // Autenticació
-        function handleAuth() {
-            const password = elements.authPassword.value;
-
-            if (password === CONFIG.ADMIN_PASSWORD) {
-                state.isAuthenticated = true;
-                elements.authGroup.style.display = 'none';
-                elements.editForm.style.display = 'block';
-
-                // Omplir el formulari amb les dades del prompt
-                if (state.currentEditingPrompt) {
-                    elements.editTitle.value = state.currentEditingPrompt.title;
-                    elements.editCategory.value = state.currentEditingPrompt.category;
-                    elements.editPrompt.value = state.currentEditingPrompt.prompt;
-                }
-            } else {
-                alert('Contrasenya incorrecta!');
-                elements.authPassword.value = '';
-            }
         }
 
         // Desar canvis
         async function handleSave() {
-            if (!state.isAuthenticated || !state.currentEditingPrompt) return;
+            if (!state.currentEditingPrompt) return;
 
             const updatedPrompt = {
                 ...state.currentEditingPrompt,
@@ -870,6 +826,15 @@
 
             if (!updatedPrompt.title || !updatedPrompt.prompt) {
                 alert('El títol i el prompt són obligatoris!');
+                return;
+            }
+
+            // Demanar contrasenya abans de desar
+            const password = prompt('Introdueix la contrasenya d\'administrador per desar els canvis:');
+            if (!password) return;
+
+            if (password !== CONFIG.ADMIN_PASSWORD) {
+                alert('Contrasenya incorrecta!');
                 return;
             }
 
@@ -884,6 +849,7 @@
                 }
 
                 filterByCategory(state.currentCategory);
+                renderCategories();
                 closeModal();
 
                 alert('Prompt actualitzat correctament!');
@@ -895,9 +861,18 @@
 
         // Esborrar prompt (moure a paperera)
         async function handleDelete() {
-            if (!state.isAuthenticated || !state.currentEditingPrompt) return;
+            if (!state.currentEditingPrompt) return;
 
             if (!confirm('Estàs segur que vols esborrar aquest prompt? S\'enviarà a la paperera.')) {
+                return;
+            }
+
+            // Demanar contrasenya abans d'esborrar
+            const password = prompt('Introdueix la contrasenya d\'administrador per esborrar:');
+            if (!password) return;
+
+            if (password !== CONFIG.ADMIN_PASSWORD) {
+                alert('Contrasenya incorrecta!');
                 return;
             }
 
