@@ -914,6 +914,8 @@
 
         async function moveToTrash(prompt) {
             try {
+                console.log('🗑️ Intentant esborrar prompt:', prompt);
+
                 const response = await fetch(CONFIG.API_URL, {
                     method: 'POST',
                     headers: {
@@ -925,10 +927,23 @@
                     })
                 });
 
-                if (!response.ok) throw new Error('Error movent a paperera');
-                return await response.json();
+                console.log('🟢 Resposta de moveToTrash. Status:', response.status);
+
+                const result = await response.json();
+                console.log('📦 Resultat de moveToTrash:', result);
+
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                if (!response.ok) {
+                    throw new Error('Error movent a paperera');
+                }
+
+                return result;
             } catch (error) {
-                console.error('Error en moveToTrash:', error);
+                console.error('❌ Error en moveToTrash:', error);
+                console.error('❌ Detalls de l\'error:', error.message);
                 throw error;
             }
         }
