@@ -406,6 +406,32 @@
             background-color: var(--danger-hover);
         }
 
+        /* Footer */
+        footer {
+            background-color: var(--bg-color);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+            margin-top: 3rem;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
@@ -951,5 +977,13 @@
         // Fer accessibles les funcions globals
         window.copyPrompt = copyPrompt;
     </script>
+
+    <!-- Footer -->
+    <footer>
+        <p>Vols afegir un nou prompt?</p>
+        <a href="https://forms.gle/CG3C7HCHNHJry7oh6" target="_blank" rel="noopener noreferrer">
+            ➕ Emplena el formulari aquí
+        </a>
+    </footer>
 </body>
 </html>
