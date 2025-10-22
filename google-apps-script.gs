@@ -61,6 +61,10 @@ function doPost(e) {
       return updatePrompt(promptData);
     }
 
+    if (action === 'deletePrompt') {
+      return deletePromptPermanently(promptData);
+    }
+
     return ContentService.createTextOutput(JSON.stringify({
       error: 'Acció no reconeguda: ' + action
     })).setMimeType(ContentService.MimeType.JSON);
@@ -197,6 +201,37 @@ function moveToTrash(promptData) {
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
       message: 'Prompt mogut a la paperera correctament'
+    })).setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({
+      error: error.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Esborrar un prompt definitivament (eliminar la fila del Google Sheet)
+ */
+function deletePromptPermanently(promptData) {
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName(MAIN_SHEET_NAME);
+
+    if (!sheet) {
+      return ContentService.createTextOutput(JSON.stringify({
+        error: `No s'ha trobat el full "${MAIN_SHEET_NAME}"`
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    const rowIndex = parseInt(promptData.rowIndex);
+
+    // Eliminar la fila del Google Sheet
+    sheet.deleteRow(rowIndex);
+
+    return ContentService.createTextOutput(JSON.stringify({
+      success: true,
+      message: 'Prompt esborrat definitivament'
     })).setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {

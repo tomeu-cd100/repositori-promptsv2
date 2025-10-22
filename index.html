@@ -940,11 +940,18 @@
             }
         }
 
-        // Esborrar prompt (moure a paperera)
+        // Esborrar prompt (moure a paperera o esborrar definitivament)
         async function handleDelete() {
             if (!state.currentEditingPrompt) return;
 
-            if (!confirm('Estàs segur que vols esborrar aquest prompt? S\'enviarà a la paperera.')) {
+            const isInTrash = state.currentEditingPrompt.category === 'Paperera';
+
+            // Missatge de confirmació diferent segons si està a la Paperera o no
+            const confirmMessage = isInTrash
+                ? 'ATENCIÓ: Aquest prompt s\'esborrarà DEFINITIVAMENT i no es podrà recuperar. Estàs segur?'
+                : 'Estàs segur que vols esborrar aquest prompt? S\'enviarà a la paperera.';
+
+            if (!confirm(confirmMessage)) {
                 return;
             }
 
@@ -958,17 +965,21 @@
             }
 
             try {
-                // Crear prompt amb categoria Paperera
-                const trashedPrompt = {
-                    ...state.currentEditingPrompt,
-                    category: 'Paperera'
-                };
-
-                // Actualitzar a Google Sheets (canviar categoria a Paperera)
-                await updatePromptInSheet(trashedPrompt);
-
-                closeModal();
-                alert('Prompt enviat a la paperera!');
+                if (isInTrash) {
+                    // Si està a la Paperera, esborrar definitivament
+                    await deletePromptPermanently(state.currentEditingPrompt);
+                    closeModal();
+                    alert('Prompt esborrat definitivament!');
+                } else {
+                    // Si no està a la Paperera, moure-hi
+                    const trashedPrompt = {
+                        ...state.currentEditingPrompt,
+                        category: 'Paperera'
+                    };
+                    await updatePromptInSheet(trashedPrompt);
+                    closeModal();
+                    alert('Prompt enviat a la paperera!');
+                }
 
                 // Recarregar tots els prompts des del Google Sheet
                 await loadPrompts();
@@ -1006,6 +1017,36 @@
                 return result;
             } catch (error) {
                 console.error('❌ Error en updatePromptInSheet:', error);
+                throw error;
+            }
+        }
+
+        async function deletePromptPermanently(prompt) {
+            try {
+                console.log('🗑️ Intentant esborrar definitivament prompt:', prompt);
+
+                const formData = new URLSearchParams();
+                formData.append('action', 'deletePrompt');
+                formData.append('data', JSON.stringify(prompt));
+
+                const response = await fetch(CONFIG.API_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                console.log('🟢 Resposta de deletePrompt. Status:', response.status);
+
+                const result = await response.json();
+                console.log('📦 Resultat de deletePrompt:', result);
+
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                if (!response.ok) throw new Error('Error esborrant');
+                return result;
+            } catch (error) {
+                console.error('❌ Error en deletePromptPermanently:', error);
                 throw error;
             }
         }
