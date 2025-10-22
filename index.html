@@ -529,6 +529,26 @@
         </div>
     </div>
 
+    <!-- Modal de contrasenya -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Autenticació requerida</h2>
+                <span class="close-password">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="passwordInput">Introdueix la contrasenya d'administrador:</label>
+                    <input type="password" id="passwordInput" placeholder="Contrasenya" autocomplete="off">
+                </div>
+                <div class="modal-actions">
+                    <button id="passwordConfirmBtn" class="btn-primary">Confirmar</button>
+                    <button id="passwordCancelBtn" class="btn-secondary">Cancel·lar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Configuració
         const CONFIG = {
@@ -563,7 +583,12 @@
             deleteBtn: document.getElementById('deleteBtn'),
             closeModal: document.querySelector('.close'),
             emptyState: document.getElementById('emptyState'),
-            loadingState: document.getElementById('loadingState')
+            loadingState: document.getElementById('loadingState'),
+            passwordModal: document.getElementById('passwordModal'),
+            passwordInput: document.getElementById('passwordInput'),
+            passwordConfirmBtn: document.getElementById('passwordConfirmBtn'),
+            passwordCancelBtn: document.getElementById('passwordCancelBtn'),
+            closePasswordModal: document.querySelector('.close-password')
         };
 
         // Inicialització
@@ -583,16 +608,30 @@
             elements.searchInput.addEventListener('input', handleSearch);
             elements.searchBtn.addEventListener('click', handleSearch);
 
-            // Modal
+            // Modal d'edició
             elements.closeModal.addEventListener('click', closeModal);
             elements.cancelBtn.addEventListener('click', closeModal);
             elements.saveBtn.addEventListener('click', handleSave);
             elements.deleteBtn.addEventListener('click', handleDelete);
 
-            // Tancar modal en clicar fora
+            // Modal de contrasenya
+            elements.closePasswordModal.addEventListener('click', closePasswordModal);
+            elements.passwordCancelBtn.addEventListener('click', closePasswordModal);
+
+            // Enter al camp de contrasenya
+            elements.passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    elements.passwordConfirmBtn.click();
+                }
+            });
+
+            // Tancar modals en clicar fora
             window.addEventListener('click', (e) => {
                 if (e.target === elements.editModal) {
                     closeModal();
+                }
+                if (e.target === elements.passwordModal) {
+                    closePasswordModal();
                 }
             });
         }
@@ -816,6 +855,42 @@
             state.currentEditingPrompt = null;
         }
 
+        // Modal de contrasenya
+        function askPassword() {
+            return new Promise((resolve) => {
+                elements.passwordInput.value = '';
+                elements.passwordModal.classList.add('show');
+                elements.passwordInput.focus();
+
+                // Gestionar confirmació
+                const confirmHandler = () => {
+                    const password = elements.passwordInput.value;
+                    closePasswordModal();
+                    cleanup();
+                    resolve(password);
+                };
+
+                // Gestionar cancel·lació
+                const cancelHandler = () => {
+                    cleanup();
+                    resolve(null);
+                };
+
+                // Afegir listeners temporals
+                elements.passwordConfirmBtn.addEventListener('click', confirmHandler, { once: true });
+
+                // Cleanup per evitar múltiples listeners
+                const cleanup = () => {
+                    elements.passwordConfirmBtn.removeEventListener('click', confirmHandler);
+                };
+            });
+        }
+
+        function closePasswordModal() {
+            elements.passwordModal.classList.remove('show');
+            elements.passwordInput.value = '';
+        }
+
         // Desar canvis
         async function handleSave() {
             if (!state.currentEditingPrompt) return;
@@ -832,8 +907,8 @@
                 return;
             }
 
-            // Demanar contrasenya abans de desar
-            const password = prompt('Introdueix la contrasenya d\'administrador per desar els canvis:');
+            // Demanar contrasenya amb el modal personalitzat
+            const password = await askPassword();
             if (!password) return;
 
             if (password !== CONFIG.ADMIN_PASSWORD) {
@@ -864,8 +939,8 @@
                 return;
             }
 
-            // Demanar contrasenya abans d'esborrar
-            const password = prompt('Introdueix la contrasenya d\'administrador per esborrar:');
+            // Demanar contrasenya amb el modal personalitzat
+            const password = await askPassword();
             if (!password) return;
 
             if (password !== CONFIG.ADMIN_PASSWORD) {
