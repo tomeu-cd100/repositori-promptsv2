@@ -751,7 +751,10 @@
             const categories = ['all', ...new Set(state.prompts.map(p => p.category))];
 
             elements.categoryList.innerHTML = categories.map(cat => {
-                const count = cat === 'all' ? state.prompts.length : (categoryCounts[cat] || 0);
+                // Per "Tots els prompts", comptar només els que NO són Paperera
+                const count = cat === 'all'
+                    ? state.prompts.filter(p => p.category !== 'Paperera').length
+                    : (categoryCounts[cat] || 0);
                 const displayName = cat === 'all' ? 'Tots els prompts' : cat;
                 const activeClass = state.currentCategory === cat ? 'active' : '';
 
@@ -777,7 +780,8 @@
             state.currentCategory = category;
 
             if (category === 'all') {
-                state.filteredPrompts = [...state.prompts];
+                // Excloure la Paperera de "Tots els prompts"
+                state.filteredPrompts = state.prompts.filter(p => p.category !== 'Paperera');
             } else {
                 state.filteredPrompts = state.prompts.filter(p => p.category === category);
             }
@@ -809,7 +813,12 @@
                     state.currentCategory === 'all' ||
                     prompt.category === state.currentCategory;
 
-                return matchesSearch && matchesCategory;
+                // Si estem a "Tots els prompts", excloure la Paperera
+                const notInTrash =
+                    state.currentCategory !== 'all' ||
+                    prompt.category !== 'Paperera';
+
+                return matchesSearch && matchesCategory && notInTrash;
             });
 
             renderPrompts();
