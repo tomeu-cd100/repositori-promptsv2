@@ -297,6 +297,8 @@ Aquest projecte és ideal per:
 
 ## 📚 Documentació Addicional
 
+> **📋 Índex complet de documentació**: [DOCS_INDEX.md](DOCS_INDEX.md) - Troba ràpidament el que necessites
+
 - **[⚡ QUICKSTART.md](QUICKSTART.md)** - Guia d'inici ràpid en 5 minuts
 - **[DESPLEGAR_GITHUB_PAGES.md](DESPLEGAR_GITHUB_PAGES.md)** - Guia completa i detallada per desplegar a GitHub Pages
 - **[GUIA_GOOGLE_DRIVE.md](GUIA_GOOGLE_DRIVE.md)** - Alternativa per compartir via Google Drive
