@@ -20,6 +20,8 @@ Aplicació web per gestionar prompts des d'un formulari de Google Forms connecta
 
 ## 🚀 Instal·lació Ràpida
 
+> **⚡ Vols començar encara més ràpid?** Consulta la [Guia Ràpida (5 minuts)](QUICKSTART.md)
+
 ### Pas 1: Configurar Google Apps Script
 
 1. Obre el teu Google Spreadsheet
@@ -295,6 +297,7 @@ Aquest projecte és ideal per:
 
 ## 📚 Documentació Addicional
 
+- **[⚡ QUICKSTART.md](QUICKSTART.md)** - Guia d'inici ràpid en 5 minuts
 - **[DESPLEGAR_GITHUB_PAGES.md](DESPLEGAR_GITHUB_PAGES.md)** - Guia completa i detallada per desplegar a GitHub Pages
 - **[GUIA_GOOGLE_DRIVE.md](GUIA_GOOGLE_DRIVE.md)** - Alternativa per compartir via Google Drive
 - **[google-apps-script.gs](google-apps-script.gs)** - Backend amb comentaris detallats
